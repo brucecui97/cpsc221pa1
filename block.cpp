@@ -31,10 +31,10 @@ void Block::Build(PNG& im, int upper, int left, int dimension){
 
     for (int row = upper; row<upper+Dimension();row++){
     for (int col = left; col<left+Dimension();col++){
-      im.getPixel(col,row)->h = data[row][col].h;
-      im.getPixel(col,row)->s = data[row][col].s;
-      im.getPixel(col,row)->l = data[row][col].l;
-      im.getPixel(col,row)->a = data[row][col].a;
+      im.getPixel(col,row)->h = data[row-upper][col-left].h;
+      im.getPixel(col,row)->s = data[row-upper][col-left].s;
+      im.getPixel(col,row)->l = data[row-upper][col-left].l;
+      im.getPixel(col,row)->a = data[row-upper][col-left].a;
     }
 
   }
