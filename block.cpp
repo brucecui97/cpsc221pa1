@@ -8,8 +8,8 @@
   //        vector indices
 void Block::Build(PNG& im, int upper, int left, int dimension){
   std::vector<HSLAPixel> rowVals;
-  for (int row = 0; row<im.height();row++){
-    for (int col = 0; col<im.width();col++){
+  for (int row = upper; row<im.height();row++){
+    for (int col = left; col<im.width();col++){
       rowVals.push_back(*im.getPixel(row,col));
     }
     data.push_back(rowVals);
