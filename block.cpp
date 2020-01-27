@@ -9,8 +9,14 @@
 void Block::Build(PNG& im, int upper, int left, int dimension){
   std::vector<HSLAPixel> rowVals;
   for (int row = upper; row<upper+dimension;row++){
+    std::vector<HSLAPixel> rowVals;
     for (int col = left; col<left+dimension;col++){
-      rowVals.push_back(*im.getPixel(row,col));
+      double h = im.getPixel(col,row)->h;
+      double l= im.getPixel(col,row)->l;
+      double s= im.getPixel(col,row)->s;
+      double a = im.getPixel(col,row)->a;
+      HSLAPixel pixel = HSLAPixel(h,l,s,a);
+      rowVals.push_back(pixel);
     }
     data.push_back(rowVals);
   }
@@ -22,7 +28,17 @@ void Block::Build(PNG& im, int upper, int left, int dimension){
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
   void Block::Render(PNG& im, int upper, int left) const{
-    
+
+    for (int row = upper; row<upper+Dimension();row++){
+    for (int col = left; col<left+Dimension();col++){
+      im.getPixel(col,row)->h = data[row][col].h;
+      im.getPixel(col,row)->s = data[row][col].s;
+      im.getPixel(col,row)->l = data[row][col].l;
+      im.getPixel(col,row)->a = data[row][col].a;
+    }
+
+  }
+
   }
 
   // "Reverse" the Hue and Luminance channels for each pixel in the data attribute
