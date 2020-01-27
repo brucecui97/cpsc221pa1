@@ -8,8 +8,8 @@
   //        vector indices
 void Block::Build(PNG& im, int upper, int left, int dimension){
   std::vector<HSLAPixel> rowVals;
-  for (int row = upper; row<im.height();row++){
-    for (int col = left; col<im.width();col++){
+  for (int row = upper; row<upper+dimension;row++){
+    for (int col = left; col<left+dimension;col++){
       rowVals.push_back(*im.getPixel(row,col));
     }
     data.push_back(rowVals);
@@ -21,7 +21,9 @@ void Block::Build(PNG& im, int upper, int left, int dimension){
   //   with upper-left corner at (left, upper)
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
-  void Block::Render(PNG& im, int upper, int left) const{}
+  void Block::Render(PNG& im, int upper, int left) const{
+    
+  }
 
   // "Reverse" the Hue and Luminance channels for each pixel in the data attribute
   //   to simulate a photo-negative effect.
