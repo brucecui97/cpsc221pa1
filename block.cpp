@@ -15,7 +15,7 @@ void Block::Build(PNG& im, int upper, int left, int dimension){
       double l= im.getPixel(col,row)->l;
       double s= im.getPixel(col,row)->s;
       double a = im.getPixel(col,row)->a;
-      HSLAPixel pixel = HSLAPixel(h,l,s,a);
+      HSLAPixel pixel = HSLAPixel(h,s,l,a);
       rowVals.push_back(pixel);
     }
     data.push_back(rowVals);
@@ -45,7 +45,22 @@ void Block::Build(PNG& im, int upper, int left, int dimension){
   //   to simulate a photo-negative effect.
   // Refer to the HSLAPixel documentation to determine an appropriate transformation
   //   for "reversing" hue and luminance.
-  void Block::Negative(){}
+  void Block::Negative(){
+    for (int row = 0;row<Dimension();row++){
+      for (int col=0;col<Dimension();col++){
+        double new_h = data[row][col].h + 180;
+        if (new_h>=360){
+          new_h = new_h - 360;
+        }
+        data[row][col].h = new_h;
+        double before = data[row][col].l;
+        data[row][col].l = 1.0-data[row][col].l;
+        double after = data[row][col].l;
+
+      }
+
+    }
+  }
 
   // Return the horizontal (or vertical) size of the data block's image region
   int  Block::Dimension() const{
