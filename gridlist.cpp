@@ -25,7 +25,22 @@ PNG GridList::Render() const
 // Be careful of the special case of inserting into an empty list.
 void GridList::InsertBack(const Block& bdata)
 {
-  // enter your code here
+  GridNode* lastNode = new GridNode(bdata);
+  lastNode->next = NULL; 
+  lastNode->prev = NULL;
+
+  if  (northwest == NULL ||southeast==NULL){
+   northwest = lastNode;
+   southeast = lastNode;
+   return;
+  }
+  else{
+    southeast->next = lastNode;
+    lastNode-> prev = southeast;
+    southeast = southeast ->next;
+  }
+
+
 }
 
 // if this list has an odd number of column blocks, then the right side will have more blocks
@@ -90,6 +105,7 @@ void GridList::Clear()
 void GridList::Copy(const GridList& otherlist)
 {
   // enter your code here
+
 }
 
 // IMPLEMENT ANY PRIVATE FUNCTIONS YOU HAVE ADDED BELOW
