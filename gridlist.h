@@ -46,7 +46,7 @@ class GridList {
     //
     //
     //
-
+    void checkerBoardRow(GridNode* startNode, bool isFirstIncluded, int rowLen);
   public:
 
     // GridList public member functions
