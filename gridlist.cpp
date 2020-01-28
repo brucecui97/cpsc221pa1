@@ -19,9 +19,19 @@ PNG GridList::Render() const
     PNG image;
     return image;
   }else{
-    int width = dimx * northwest->data.Dimension();
-    int height = dimy * northwest->data.Dimension();
+    int blockSize = northwest->data.Dimension();
+    int width = dimx * blockSize;
+    int height = dimy * blockSize;
     PNG image(width, height);
+
+    GridNode* curr = northwest;
+    
+    for (int row = 0;row<height;row = row +blockSize){
+      for (int col = 0; col<width;col = col + blockSize){
+        curr->data.Render(image,row,col);
+        curr = curr->next;
+      }
+    }
     
   // enter your code here
   
