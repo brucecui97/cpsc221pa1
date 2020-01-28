@@ -15,9 +15,20 @@
 // The fully coloured PNG is returned.
 PNG GridList::Render() const
 {
-  PNG image;
+  if (dimx==0 && dimy==0){
+    PNG image;
+    return image;
+  }else{
+    int width = dimx * northwest->data.Dimension();
+    int height = dimy * northwest->data.Dimension();
+    PNG image(width, height);
+    
   // enter your code here
-  return image;
+  
+    return image;
+
+  }
+  
 }
 
 // Allocates a new GridNode containing bdata and
