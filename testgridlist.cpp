@@ -22,8 +22,13 @@ TEST_CASE("GridList::extract column", "[weight=1][part=gridlist]") {
   GridNode* p0_f = gl.getNorthWest();
   GridNode* p1_f = p0_f->next;
   GridNode* p2_f = p1_f->next;
+  GridNode* p3_f = p2_f->next;
+  GridNode* p4_f = p3_f->next;
+  GridNode* p5_f = p4_f->next;
   std::vector<GridNode*> column = gl.extractColumn(gl,1); 
-  REQUIRE(column[1]==p1_f);
+  REQUIRE(column[0]==p1_f);
+  REQUIRE(column[1]==p4_f);
+  REQUIRE(column[2]==p4_f->next->next->next);
 }
 
 
