@@ -79,6 +79,33 @@ void GridList::InsertBack(const Block &bdata)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::Sandwich_H(GridList &inner)
 {
+  if (dimy!=inner.dimy){
+    return;
+  }
+  int original_num_cols = dimx;
+
+  int left_col_num_original = dimx/2-1;
+  int right_col_num_original = dimx/2;
+
+  int left_col_num_inner = 0;
+  int right_col_num_inner = inner.Length()/dimy-1;
+
+  std::vector<GridNode*> original_left = extractColumn(left_col_num_original);
+  std::vector<GridNode*> original_right = extractColumn(right_col_num_original);
+  std::vector<GridNode*> inner_left = inner.extractColumn(left_col_num_inner);
+  std::vector<GridNode*> inner_right = inner.extractColumn(right_col_num_inner);
+
+
+  for (int i =0;i<original_left.size();i++){
+    original_left[i]->next = inner_left[i];
+    inner_left[i]->prev = original_left[i];
+
+    inner_right[i]->next = original_right[i];
+    original_right[i]->prev = inner_right[i];
+  }
+
+
+
   // enter your code here
   //extractColumn(northwest,1);
 }
