@@ -47,6 +47,7 @@ class GridList {
     //
     //
     void checkerBoardRow(GridNode* startNode, bool isFirstIncluded, int rowLen);
+    
   public:
 
     // GridList public member functions
@@ -69,6 +70,7 @@ class GridList {
     // for testing only
     GridNode* getNorthWest();
     GridNode* getSouthEast();
+    std::vector<GridNode*> extractColumn (GridList& start, int column);
 };
 
 #endif

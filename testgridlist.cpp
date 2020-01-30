@@ -15,6 +15,18 @@
 using namespace cs221util;
 using namespace std;
 
+TEST_CASE("GridList::extract column", "[weight=1][part=gridlist]") {
+  PNG img(3, 3);
+  GridList gl(img, 1);
+
+  GridNode* p0_f = gl.getNorthWest();
+  GridNode* p1_f = p0_f->next;
+  GridNode* p2_f = p1_f->next;
+  std::vector<GridNode*> column = gl.extractColumn(gl,1); 
+  REQUIRE(column[1]==p1_f);
+}
+
+
 TEST_CASE("GridList::Constructor - InsertBack - 1x1", "[weight=1][part=gridlist]") {
   PNG img(2, 2);
   GridList gl(img, 2);
@@ -956,3 +968,6 @@ TEST_CASE("GridList::CheckerSwap - linking", "[weight=1][part=gridlist]") {
   REQUIRE(s270_8_f == p270_8_f);
   REQUIRE(s270_8_f == s270_8_b);
 }
+
+
+

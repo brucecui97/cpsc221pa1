@@ -80,6 +80,7 @@ void GridList::InsertBack(const Block &bdata)
 void GridList::Sandwich_H(GridList &inner)
 {
   // enter your code here
+  //extractColumn(northwest,1);
 }
 
 // inner list must have the same horizontal resolution, horizontal block dimension, and block size
@@ -161,3 +162,17 @@ void GridList::checkerBoardRow(GridNode* startNode, bool flag, int rowLen){
       curr = curr->next;
     }
   }
+
+std::vector<GridNode*> GridList::extractColumn (GridList& start, int column){
+  std::vector<GridNode*> res;
+  GridNode* curr = start.getNorthWest();
+  for (int row = 0; row<dimy;row++){
+    for (int col = 0; col<dimx;col++){
+      if (col==column){
+        res.push_back(curr);
+      }
+      curr = curr->next;
+    }
+  }
+  return res;
+}
