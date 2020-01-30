@@ -163,9 +163,9 @@ void GridList::checkerBoardRow(GridNode* startNode, bool flag, int rowLen){
     }
   }
 
-std::vector<GridNode*> GridList::extractColumn (GridList& start, int column){
+std::vector<GridNode*> GridList::extractColumn (int column){
   std::vector<GridNode*> res;
-  GridNode* curr = start.getNorthWest();
+  GridNode* curr = northwest;
   for (int row = 0; row<dimy;row++){
     for (int col = 0; col<dimx;col++){
       if (col==column){

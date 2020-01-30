@@ -70,7 +70,7 @@ class GridList {
     // for testing only
     GridNode* getNorthWest();
     GridNode* getSouthEast();
-    std::vector<GridNode*> extractColumn (GridList& start, int column);
+    std::vector<GridNode*> extractColumn (int column);
 };
 
 #endif
