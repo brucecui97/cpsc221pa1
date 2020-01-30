@@ -35,7 +35,8 @@ class GridList {
 
     GridNode* northwest; // pointer to first (upper-left) node in the grid
     GridNode* southeast; // pointer to last (lower-right) node in the grid
-
+    int dimx; // horizontal dimension of grid (in blocks)
+    int dimy; // vertical dimension of grid (in blocks)
 
     // GridList private member functions
     void Clear();
@@ -48,8 +49,7 @@ class GridList {
     void checkerBoardRow(GridNode* startNode, bool isFirstIncluded, int rowLen);
     
   public:
-    int dimx; // horizontal dimension of grid (in blocks)
-    int dimy; // vertical dimension of grid (in blocks)
+
 
     // GridList public member functions
     GridList();
@@ -71,6 +71,8 @@ class GridList {
     // for testing only
     GridNode* getNorthWest();
     GridNode* getSouthEast();
+    void setNorthWest(GridNode* start);
+    void setSouthEast(GridNode* end);
     std::vector<GridNode*> extractColumn (int column);
 };
 
