@@ -113,12 +113,12 @@ void GridList::Sandwich_H(GridList &inner)
     inner_right[i]->next = original_right[i];
     original_right[i]->prev = inner_right[i];
   }
-   dimx = dimx + inner.dimx;
+  dimx = dimx + inner.dimx;
 
   inner.northwest = NULL;
   inner.southeast = NULL;
-  inner.dimx=0;
-  inner.dimy=0;
+  inner.dimx = 0;
+  inner.dimy = 0;
 
   // enter your code here
   //extractColumn(northwest,1);
@@ -145,8 +145,8 @@ void GridList::Sandwich_V(GridList &inner)
   int top_row_num_original = dimy / 2 - 1;
   int bot_row_num_original = dimy / 2;
 
-  GridNode* top_last_node = lastElementInRow(top_row_num_original);
-  GridNode* bot_first_node = FirstElementInRow(bot_row_num_original);
+  GridNode *top_last_node = lastElementInRow(top_row_num_original);
+  GridNode *bot_first_node = FirstElementInRow(bot_row_num_original);
 
   top_last_node->next = inner.northwest;
   inner.northwest->prev = top_last_node;
@@ -159,8 +159,6 @@ void GridList::Sandwich_V(GridList &inner)
   inner.dimy = 0;
   inner.northwest = NULL;
   inner.southeast = NULL;
-
-  
 
   // enter your code here
 }
@@ -177,23 +175,23 @@ void GridList::CheckerSwap(GridList &otherlist)
     return;
   }
 
-  if (dimx!=otherlist.dimx || dimy!=otherlist.dimy){
+  if (dimx != otherlist.dimx || dimy != otherlist.dimy)
+  {
     return;
   }
 
-  
-  GridNode* curr1 = northwest;
-  GridNode* curr2 = otherlist.northwest;
+  GridNode *curr1 = northwest;
+  GridNode *curr2 = otherlist.northwest;
 
   for (int row = 0; row < dimy; row++)
   {
     if (row % 2 == 0)
     {
-      checkerSwapRow(curr1,curr2, false, dimx);
+      checkerSwapRow(curr1, curr2, false, dimx);
     }
     else
     {
-      checkerSwapRow(curr1,curr2, true, dimx);
+      checkerSwapRow(curr1, curr2, true, dimx);
     }
 
     for (int col = 0; col < dimx; col++)
@@ -202,7 +200,6 @@ void GridList::CheckerSwap(GridList &otherlist)
       curr2 = curr2->next;
     }
   }
-
 }
 
 // POST: this list has the negative effect applied selectively to GridNodes to form
@@ -240,17 +237,19 @@ void GridList::CheckerN()
 void GridList::Clear()
 {
   // enter your code here
-  if (northwest==NULL){
+  if (northwest == NULL)
+  {
     return;
   }
-  GridNode* curr = northwest;
-  while(curr->next!=NULL){
-    GridNode* next = curr->next;
+  GridNode *curr = northwest;
+  while (curr->next != NULL)
+  {
+    GridNode *next = curr->next;
     delete curr;
     curr = next;
   }
   delete curr;
-  
+
   northwest = NULL;
   southeast = NULL;
   dimx = 0;
@@ -260,7 +259,7 @@ void GridList::Clear()
 // Allocates new nodes into this list as copies of all nodes from otherlist
 void GridList::Copy(const GridList &otherlist)
 {
-  // enter your code here
+  
 }
 
 // IMPLEMENT ANY PRIVATE FUNCTIONS YOU HAVE ADDED BELOW
@@ -299,13 +298,14 @@ std::vector<GridNode *> GridList::extractColumn(int column)
   return res;
 }
 
-
-  GridNode* GridList::FirstElementInRow(int desired_row){
+GridNode *GridList::FirstElementInRow(int desired_row)
+{
 
   GridNode *curr = northwest;
   for (int row = 0; row < dimy; row++)
   {
-    if (row == desired_row){
+    if (row == desired_row)
+    {
       return curr;
     }
     for (int col = 0; col < dimx; col++)
@@ -313,56 +313,57 @@ std::vector<GridNode *> GridList::extractColumn(int column)
       curr = curr->next;
     }
   }
+}
+GridNode *GridList::lastElementInRow(int desired_row)
+{
+  GridNode *curr = northwest;
+  for (int row = 0; row < dimy; row++)
+  {
 
-
-  }
-  GridNode* GridList::lastElementInRow(int desired_row){
-    GridNode *curr = northwest;
-    for (int row = 0; row < dimy; row++)
+    for (int col = 0; col < dimx; col++)
     {
-      
-      for (int col = 0; col < dimx; col++)
+      if (row == desired_row && col == dimx - 1)
       {
-        if (row==desired_row && col == dimx-1){
-          return curr;
-        }
-         curr = curr->next;
+        return curr;
       }
+      curr = curr->next;
     }
   }
+}
 
-void GridList::checkerSwapRow(GridNode* node1, GridNode* node2, bool flag, int rowLen){
-  
+void GridList::checkerSwapRow(GridNode *node1, GridNode *node2, bool flag, int rowLen)
+{
 
   for (int i = 0; i < rowLen; i++)
   {
-    GridNode* prev1 = node1->prev;
-    GridNode* post1 = node1->next;
+    GridNode *prev1 = node1->prev;
+    GridNode *post1 = node1->next;
 
-    GridNode* prev2 = node2->prev;
-    GridNode* post2 = node2->next;
+    GridNode *prev2 = node2->prev;
+    GridNode *post2 = node2->next;
     if (flag)
     {
       prev1->next = node2;
       node2->prev = prev1;
 
-    if (post1!=NULL){
-      post1->prev = node2;
-      node2->next = post1;
-    }
+      if (post1 != NULL)
+      {
+        post1->prev = node2;
+        node2->next = post1;
+      }
 
       prev2->next = node1;
       node1->prev = prev2;
 
-  if (post2!=NULL){
-      post2->prev = node1;
-      node1->next = post2;
-  }
+      if (post2 != NULL)
+      {
+        post2->prev = node1;
+        node1->next = post2;
+      }
     }
     flag = !flag;
 
     node1 = post1;
     node2 = post2;
   }
-
 }
