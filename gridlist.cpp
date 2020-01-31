@@ -137,6 +137,31 @@ void GridList::Sandwich_H(GridList &inner)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::Sandwich_V(GridList &inner)
 {
+  if (dimx != inner.dimx)
+  {
+    return;
+  }
+
+  int top_row_num_original = dimy / 2 - 1;
+  int bot_row_num_original = dimy / 2;
+
+  GridNode* top_last_node = lastElementInRow(top_row_num_original);
+  GridNode* bot_first_node = FirstElementInRow(bot_row_num_original);
+
+  top_last_node->next = inner.northwest;
+  inner.northwest->prev = top_last_node;
+
+  inner.southeast->next = bot_first_node;
+  bot_first_node->prev = inner.southeast;
+  
+  dimy = dimy + inner.dimy;
+  inner.dimx = 0;
+  inner.dimy = 0;
+  inner.northwest = NULL;
+  inner.southeast = NULL;
+
+  
+
   // enter your code here
 }
 
