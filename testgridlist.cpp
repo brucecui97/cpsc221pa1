@@ -15,6 +15,39 @@
 using namespace cs221util;
 using namespace std;
 
+TEST_CASE("GridList::first_element_in_row", "[weight=1][part=gridlist]") {
+  PNG img(3, 3);
+  GridList gl(img, 1);
+
+  GridNode* p0_f = gl.getNorthWest();
+  GridNode* p1_f = p0_f->next;
+  GridNode* p2_f = p1_f->next;
+  GridNode* p3_f = p2_f->next;
+  GridNode* p4_f = p3_f->next;
+
+  GridNode* gridNode = gl.FirstElementInRow(1); 
+  REQUIRE(gridNode==p3_f);
+
+}
+
+TEST_CASE("GridList::last_element_in_row", "[weight=1][part=gridlist]") {
+  PNG img(3, 3);
+  GridList gl(img, 1);
+
+  GridNode* p0_f = gl.getNorthWest();
+  GridNode* p1_f = p0_f->next;
+  GridNode* p2_f = p1_f->next;
+  GridNode* p3_f = p2_f->next;
+  GridNode* p4_f = p3_f->next;
+
+  GridNode* gridNode = gl.lastElementInRow(0); 
+  REQUIRE(gridNode==p2_f);
+
+  gridNode = gl.lastElementInRow(1); 
+  REQUIRE(gridNode==p4_f->next);
+
+}
+
 TEST_CASE("GridList::extract column", "[weight=1][part=gridlist]") {
   PNG img(3, 3);
   GridList gl(img, 1);

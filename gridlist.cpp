@@ -229,3 +229,34 @@ std::vector<GridNode *> GridList::extractColumn(int column)
   return res;
 }
 
+
+  GridNode* GridList::FirstElementInRow(int desired_row){
+
+  GridNode *curr = northwest;
+  for (int row = 0; row < dimy; row++)
+  {
+    if (row == desired_row){
+      return curr;
+    }
+    for (int col = 0; col < dimx; col++)
+    {
+      curr = curr->next;
+    }
+  }
+
+
+  }
+  GridNode* GridList::lastElementInRow(int desired_row){
+    GridNode *curr = northwest;
+    for (int row = 0; row < dimy; row++)
+    {
+      
+      for (int col = 0; col < dimx; col++)
+      {
+        if (row==desired_row && col == dimx-1){
+          return curr;
+        }
+         curr = curr->next;
+      }
+    }
+  }
