@@ -240,6 +240,21 @@ void GridList::CheckerN()
 void GridList::Clear()
 {
   // enter your code here
+  if (northwest==NULL){
+    return;
+  }
+  GridNode* curr = northwest;
+  while(curr->next!=NULL){
+    GridNode* next = curr->next;
+    delete curr;
+    curr = next;
+  }
+  delete curr;
+  
+  northwest = NULL;
+  southeast = NULL;
+  dimx = 0;
+  dimy = 0;
 }
 
 // Allocates new nodes into this list as copies of all nodes from otherlist
