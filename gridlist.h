@@ -47,6 +47,7 @@ class GridList {
     //
     //
     void checkerBoardRow(GridNode* startNode, bool isFirstIncluded, int rowLen);
+    void checkerSwapRow(GridNode* node1, GridNode* node2, bool isFirstIncluded, int rowLen);
 
     
     
@@ -69,6 +70,7 @@ class GridList {
     void Sandwich_V(GridList& inner);
     void CheckerN();
     void CheckerSwap(GridList& otherlist);
+    
 
     // for testing only
     GridNode* getNorthWest();
