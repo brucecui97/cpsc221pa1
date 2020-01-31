@@ -182,29 +182,18 @@ void GridList::CheckerSwap(GridList &otherlist)
   }
 
   
-  GridNode* curr1 = new GridNode();
-  curr1->next = northwest;
-  northwest->prev = curr1;
-  GridNode* end_dummy1 = new GridNode();
-  southeast->next = end_dummy1;
-  end_dummy1->prev = southeast;
-
-  GridNode* curr2 = new GridNode();
-  curr2->next = otherlist.northwest;
-  otherlist.northwest->prev = curr2;
-  GridNode* end_dummy2 = new GridNode();
-  otherlist.southeast->next = end_dummy2;
-  end_dummy2->prev = otherlist.southeast;
+  GridNode* curr1 = northwest;
+  GridNode* curr2 = otherlist.northwest;
 
   for (int row = 0; row < dimy; row++)
   {
     if (row % 2 == 0)
     {
-      checkerSwapRow(curr1->next,curr2->next, false, dimx);
+      checkerSwapRow(curr1,curr2, false, dimx);
     }
     else
     {
-      checkerSwapRow(curr1->next,curr2->next, true, dimx);
+      checkerSwapRow(curr1,curr2, true, dimx);
     }
 
     for (int col = 0; col < dimx; col++)
@@ -214,29 +203,6 @@ void GridList::CheckerSwap(GridList &otherlist)
     }
   }
 
-
-  // southeast->prev->next = curr1;
-  // curr1->prev = southeast->prev;
-  // southeast = curr1;
-
-  // otherlist.southeast->prev->next = curr2;
-  // curr2->prev = otherlist.southeast->prev;
-  // otherlist.southeast = curr2;
-
-  std::cout<<southeast->data.data[0][0]<<std::endl;
-  std::cout<<otherlist.southeast->data.data[0][0]<<std::endl;
-    std::cout<<southeast->prev->data.data[0][0]<<std::endl;
-  std::cout<<otherlist.southeast->prev->data.data[0][0]<<std::endl;
-
-  delete curr1;
-  northwest->prev = NULL;
-  delete curr2;
-  otherlist.northwest->prev = NULL;
-
-  delete end_dummy1;
-  southeast->next = NULL;
-  delete end_dummy2;
-  otherlist.southeast->next = NULL;
 }
 
 // POST: this list has the negative effect applied selectively to GridNodes to form
@@ -352,6 +318,7 @@ std::vector<GridNode *> GridList::extractColumn(int column)
 
 void GridList::checkerSwapRow(GridNode* node1, GridNode* node2, bool flag, int rowLen){
   
+
   for (int i = 0; i < rowLen; i++)
   {
     GridNode* prev1 = node1->prev;
@@ -364,14 +331,18 @@ void GridList::checkerSwapRow(GridNode* node1, GridNode* node2, bool flag, int r
       prev1->next = node2;
       node2->prev = prev1;
 
+    if (post1!=NULL){
       post1->prev = node2;
       node2->next = post1;
+    }
 
       prev2->next = node1;
       node1->prev = prev2;
 
+  if (post2!=NULL){
       post2->prev = node1;
       node1->next = post2;
+  }
     }
     flag = !flag;
 
