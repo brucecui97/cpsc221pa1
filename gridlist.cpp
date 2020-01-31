@@ -33,6 +33,7 @@ PNG GridList::Render() const
     {
       for (int col = 0; col < width; col = col + blockSize)
       {
+        // std::cout<<curr->data.data[0][0]<<std::endl;
         curr->data.Render(image, row, col);
         curr = curr->next;
       }
@@ -79,32 +80,45 @@ void GridList::InsertBack(const Block &bdata)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::Sandwich_H(GridList &inner)
 {
-  if (dimy!=inner.dimy){
+  if (dimy != inner.dimy)
+  {
     return;
   }
-  int original_num_cols = dimx;
 
-  int left_col_num_original = dimx/2-1;
-  int right_col_num_original = dimx/2;
+  int left_col_num_original = dimx / 2 - 1;
+  int right_col_num_original = dimx / 2;
 
   int left_col_num_inner = 0;
-  int right_col_num_inner = inner.Length()/dimy-1;
+  int right_col_num_inner = inner.Length() / dimy - 1;
 
-  std::vector<GridNode*> original_left = extractColumn(left_col_num_original);
-  std::vector<GridNode*> original_right = extractColumn(right_col_num_original);
-  std::vector<GridNode*> inner_left = inner.extractColumn(left_col_num_inner);
-  std::vector<GridNode*> inner_right = inner.extractColumn(right_col_num_inner);
+  std::vector<GridNode *> original_left = extractColumn(left_col_num_original);
+  std::vector<GridNode *> original_right = extractColumn(right_col_num_original);
+  std::vector<GridNode *> inner_left = inner.extractColumn(left_col_num_inner);
+  std::vector<GridNode *> inner_right = inner.extractColumn(right_col_num_inner);
 
+  int inner_left_size = inner_left.size();
+  int inner_right_size = inner_right.size();
+  GridNode *foo = inner_right[0];
+  GridNode *bar = original_right[0];
 
-  for (int i =0;i<original_left.size();i++){
+  for (int i = 0; i < original_left.size(); i++)
+  {
+    // std::cout << "original_left " << i << original_left[i]->data.data[0][0] << std::endl;
+    // std::cout << "inner_left " << i << inner_left[i]->data.data[0][0] << std::endl;
     original_left[i]->next = inner_left[i];
     inner_left[i]->prev = original_left[i];
 
+    // std::cout << "original_right " << i << original_right[i]->data.data[0][0] << std::endl;
+    //  std::cout << "inner_right " << i << inner_right[i]->data.data[0][0] << std::endl;
     inner_right[i]->next = original_right[i];
     original_right[i]->prev = inner_right[i];
   }
+   dimx = dimx + inner.dimx;
 
-
+  inner.setNorthWest(NULL);
+  inner.setSouthEast(NULL);
+  inner.dimx=0;
+  inner.dimy=0;
 
   // enter your code here
   //extractColumn(northwest,1);
@@ -142,24 +156,28 @@ void GridList::CheckerSwap(GridList &otherlist)
 // Ensure that the checkering looks correct for both odd and even horizontal block dimensions
 void GridList::CheckerN()
 {
-  if (northwest ==NULL){
+  if (northwest == NULL)
+  {
     return;
   }
-  GridNode* curr = northwest;
+  GridNode *curr = northwest;
 
-  for (int row = 0;row<dimy;row++){
-    if (row%2==0){
-      checkerBoardRow(curr,false,dimx);
+  for (int row = 0; row < dimy; row++)
+  {
+    if (row % 2 == 0)
+    {
+      checkerBoardRow(curr, false, dimx);
     }
-    else{
-      checkerBoardRow(curr,true,dimx);
+    else
+    {
+      checkerBoardRow(curr, true, dimx);
     }
 
-    for (int col = 0;col<dimx;col++){
+    for (int col = 0; col < dimx; col++)
+    {
       curr = curr->next;
     }
   }
- 
 }
 
 // Deallocates any dynamic memory associated with this list
@@ -179,27 +197,44 @@ void GridList::Copy(const GridList &otherlist)
 //
 //
 
-void GridList::checkerBoardRow(GridNode* startNode, bool flag, int rowLen){
-    GridNode* curr = startNode;
-    for (int i = 0;i<rowLen;i++){
-      if (flag){
-        curr->data.Negative();
-      }
-      flag = !flag;
-      curr = curr->next;
+void GridList::checkerBoardRow(GridNode *startNode, bool flag, int rowLen)
+{
+  GridNode *curr = startNode;
+  for (int i = 0; i < rowLen; i++)
+  {
+    if (flag)
+    {
+      curr->data.Negative();
     }
+    flag = !flag;
+    curr = curr->next;
   }
+}
 
-std::vector<GridNode*> GridList::extractColumn (int column){
-  std::vector<GridNode*> res;
-  GridNode* curr = northwest;
-  for (int row = 0; row<dimy;row++){
-    for (int col = 0; col<dimx;col++){
-      if (col==column){
+std::vector<GridNode *> GridList::extractColumn(int column)
+{
+  std::vector<GridNode *> res;
+  GridNode *curr = northwest;
+  for (int row = 0; row < dimy; row++)
+  {
+    for (int col = 0; col < dimx; col++)
+    {
+      if (col == column)
+      {
         res.push_back(curr);
       }
       curr = curr->next;
     }
   }
   return res;
+}
+
+void GridList::setNorthWest(GridNode *start)
+{
+  northwest = start;
+}
+
+void GridList::setSouthEast(GridNode *end)
+{
+  southeast = end;
 }
