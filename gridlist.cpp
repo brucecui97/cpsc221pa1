@@ -115,8 +115,8 @@ void GridList::Sandwich_H(GridList &inner)
   }
    dimx = dimx + inner.dimx;
 
-  inner.setNorthWest(NULL);
-  inner.setSouthEast(NULL);
+  inner.northwest = NULL;
+  inner.southeast = NULL;
   inner.dimx=0;
   inner.dimy=0;
 
@@ -229,12 +229,3 @@ std::vector<GridNode *> GridList::extractColumn(int column)
   return res;
 }
 
-void GridList::setNorthWest(GridNode *start)
-{
-  northwest = start;
-}
-
-void GridList::setSouthEast(GridNode *end)
-{
-  southeast = end;
-}

@@ -71,8 +71,6 @@ class GridList {
     // for testing only
     GridNode* getNorthWest();
     GridNode* getSouthEast();
-    void setNorthWest(GridNode* start);
-    void setSouthEast(GridNode* end);
     std::vector<GridNode*> extractColumn (int column);
 };
 
